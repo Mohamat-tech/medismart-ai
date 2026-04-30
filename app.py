@@ -7,7 +7,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 app = Flask(**name**)
-CORS(app, origins=”*”)
+CORS(app)
 
 DB_PATH = os.path.join(os.path.dirname(**file**), ‘medismart.db’)
 
@@ -18,56 +18,54 @@ return conn
 
 def init_db():
 conn = get_db()
-conn.executescript(’’’
-CREATE TABLE IF NOT EXISTS patients (
-id TEXT PRIMARY KEY,
-nom TEXT NOT NULL,
-dob TEXT,
-sexe TEXT,
-groupe_sanguin TEXT,
-pays TEXT,
-ville TEXT,
-telephone TEXT,
-email TEXT,
-specialite TEXT,
-maladie TEXT,
-gravite TEXT,
-type_consult TEXT,
-symptomes TEXT,
-antecedents TEXT,
-temperature REAL,
-pression TEXT,
-fc INTEGER,
-spo2 INTEGER,
-poids REAL,
-taille REAL,
-type_examen TEXT,
-resultats TEXT,
-date_creation TEXT,
-timestamp INTEGER
-);
-CREATE TABLE IF NOT EXISTS ordonnances (
-id TEXT PRIMARY KEY,
-patient_id TEXT,
-patient_nom TEXT,
-specialite TEXT,
-maladie TEXT,
-medicaments TEXT,
-ai_analysis TEXT,
-date_creation TEXT,
-FOREIGN KEY (patient_id) REFERENCES patients(id)
-);
-CREATE TABLE IF NOT EXISTS examens (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-patient_id TEXT,
-type_examen TEXT,
-date_examen TEXT,
-resultats TEXT,
-medecin TEXT,
-date_creation TEXT,
-FOREIGN KEY (patient_id) REFERENCES patients(id)
-);
-‘’’)
+conn.executescript(
+‘CREATE TABLE IF NOT EXISTS patients (’
+‘id TEXT PRIMARY KEY,’
+‘nom TEXT NOT NULL,’
+‘dob TEXT,’
+‘sexe TEXT,’
+‘groupe_sanguin TEXT,’
+‘pays TEXT,’
+‘ville TEXT,’
+‘telephone TEXT,’
+‘email TEXT,’
+‘specialite TEXT,’
+‘maladie TEXT,’
+‘gravite TEXT,’
+‘type_consult TEXT,’
+‘symptomes TEXT,’
+‘antecedents TEXT,’
+‘temperature REAL,’
+‘pression TEXT,’
+‘fc INTEGER,’
+‘spo2 INTEGER,’
+‘poids REAL,’
+‘taille REAL,’
+‘type_examen TEXT,’
+‘resultats TEXT,’
+‘date_creation TEXT,’
+‘timestamp INTEGER’
+‘);’
+‘CREATE TABLE IF NOT EXISTS ordonnances (’
+‘id TEXT PRIMARY KEY,’
+‘patient_id TEXT,’
+‘patient_nom TEXT,’
+‘specialite TEXT,’
+‘maladie TEXT,’
+‘medicaments TEXT,’
+‘ai_analysis TEXT,’
+‘date_creation TEXT’
+‘);’
+‘CREATE TABLE IF NOT EXISTS examens (’
+‘id INTEGER PRIMARY KEY AUTOINCREMENT,’
+‘patient_id TEXT,’
+‘type_examen TEXT,’
+‘date_examen TEXT,’
+‘resultats TEXT,’
+‘medecin TEXT,’
+‘date_creation TEXT’
+‘);’
+)
 conn.commit()
 conn.close()
 
@@ -116,9 +114,9 @@ return jsonify({‘error’: ‘Champs obligatoires manquants’}), 400
 patient_id = ‘PAT-’ + str(int(datetime.now().timestamp() * 1000))
 now = datetime.now().strftime(’%d/%m/%Y %H:%M’)
 conn = get_db()
-conn.execute(’’’
-INSERT INTO patients VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-‘’’, (
+conn.execute(
+‘INSERT INTO patients VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)’,
+(
 patient_id,
 data.get(‘nom’), data.get(‘dob’), data.get(‘sexe’),
 data.get(‘groupe_sanguin’), data.get(‘pays’), data.get(‘ville’),
@@ -130,14 +128,16 @@ data.get(‘fc’), data.get(‘spo2’),
 data.get(‘poids’), data.get(‘taille’),
 data.get(‘type_examen’), data.get(‘resultats’),
 now, int(datetime.now().timestamp())
-))
+)
+)
 medicaments = generate_medicaments(data.get(‘specialite’, ‘’))
 ai_text = generate_ai_analysis(data)
 ord_id = ‘ORD-’ + str(int(datetime.now().timestamp() * 1000))
-conn.execute(’’’
-INSERT INTO ordonnances VALUES (?,?,?,?,?,?,?,?)
-‘’’, (ord_id, patient_id, data.get(‘nom’), data.get(‘specialite’),
-data.get(‘maladie’), json.dumps(medicaments), ai_text, now))
+conn.execute(
+‘INSERT INTO ordonnances VALUES (?,?,?,?,?,?,?,?)’,
+(ord_id, patient_id, data.get(‘nom’), data.get(‘specialite’),
+data.get(‘maladie’), json.dumps(medicaments), ai_text, now)
+)
 conn.commit()
 conn.close()
 return jsonify({‘success’: True, ‘patient_id’: patient_id, ‘ordonnance_id’: ord_id}), 201
@@ -155,12 +155,12 @@ return jsonify(dict(row))
 def update_patient(patient_id):
 data = request.get_json()
 conn = get_db()
-conn.execute(’’’
-UPDATE patients SET nom=?, maladie=?, gravite=?, symptomes=?,
-temperature=?, fc=?, spo2=?, pression=? WHERE id=?
-‘’’, (data.get(‘nom’), data.get(‘maladie’), data.get(‘gravite’),
+conn.execute(
+‘UPDATE patients SET nom=?, maladie=?, gravite=?, symptomes=?, temperature=?, fc=?, spo2=?, pression=? WHERE id=?’,
+(data.get(‘nom’), data.get(‘maladie’), data.get(‘gravite’),
 data.get(‘symptomes’), data.get(‘temperature’), data.get(‘fc’),
-data.get(‘spo2’), data.get(‘pression’), patient_id))
+data.get(‘spo2’), data.get(‘pression’), patient_id)
+)
 conn.commit()
 conn.close()
 return jsonify({‘success’: True})
@@ -177,11 +177,11 @@ def add_examen(patient_id):
 data = request.get_json()
 now = datetime.now().strftime(’%d/%m/%Y %H:%M’)
 conn = get_db()
-conn.execute(’’’
-INSERT INTO examens (patient_id, type_examen, date_examen, resultats, medecin, date_creation)
-VALUES (?,?,?,?,?,?)
-‘’’, (patient_id, data.get(‘type_examen’), data.get(‘date_examen’),
-data.get(‘resultats’), data.get(‘medecin’), now))
+conn.execute(
+‘INSERT INTO examens (patient_id, type_examen, date_examen, resultats, medecin, date_creation) VALUES (?,?,?,?,?,?)’,
+(patient_id, data.get(‘type_examen’), data.get(‘date_examen’),
+data.get(‘resultats’), data.get(‘medecin’), now)
+)
 conn.commit()
 conn.close()
 return jsonify({‘success’: True}), 201
@@ -246,14 +246,14 @@ patient_id = data.get(‘patient_id’)
 conn = get_db()
 patient = conn.execute(‘SELECT * FROM patients WHERE id = ?’, (patient_id,)).fetchone()
 examens = conn.execute(‘SELECT * FROM examens WHERE patient_id = ? ORDER BY date_creation DESC’, (patient_id,)).fetchall()
-ordonnances = conn.execute(‘SELECT * FROM ordonnances WHERE patient_id = ?’, (patient_id,)).fetchall()
+ords = conn.execute(‘SELECT * FROM ordonnances WHERE patient_id = ?’, (patient_id,)).fetchall()
 conn.close()
 if not patient:
 return jsonify({‘error’: ‘Patient non trouve’}), 404
 return jsonify({
 ‘patient’: dict(patient),
 ‘examens’: [dict(e) for e in examens],
-‘ordonnances’: [dict(o) for o in ordonnances]
+‘ordonnances’: [dict(o) for o in ords]
 })
 
 def generate_medicaments(specialite):
@@ -282,7 +282,10 @@ alerts.append(‘Tachycardie - surveillance cardiaque recommandee.’)
 if fc and int(fc) < 50:
 alerts.append(‘Bradycardie - consultation urgente.’)
 alert_text = ’ ’.join(alerts)
-return ’Analyse IA - Patient ’ + nom + ’, ’ + sp + ’. Gravite ’ + gravite + ’. Symptomes : ’ + symptomes + ‘. ’ + alert_text + ’ Protocole therapeutique recommande avec reevaluation dans 4 semaines.’
+return (’Analyse IA - Patient ’ + nom + ’, ’ + sp +
+’. Gravite ’ + gravite + ’. Symptomes : ’ + symptomes +
+‘. ’ + alert_text +
+’ Protocole therapeutique recommande avec reevaluation dans 4 semaines.’)
 
 if **name** == ‘**main**’:
 port = int(os.environ.get(‘PORT’, 5000))
