@@ -31,7 +31,7 @@
   --cursor-ring-color: #fd1d1d;
 }
 
-/* LIGHT MODE */
+/* CORRECTION 1 : LIGHT MODE avec – correct */
 body.light-mode {
 –bg: #f4f4f8;
 –bg2: #e8e8f0;
@@ -42,8 +42,6 @@ body.light-mode {
 –text: #111118;
 –text2: #555570;
 –shadow: 0 8px 40px rgba(0,0,0,0.12);
-–cursor-color: #833ab4;
-–cursor-ring-color: #fd1d1d;
 }
 
 - { margin: 0; padding: 0; box-sizing: border-box; }
@@ -59,202 +57,77 @@ cursor: none;
 transition: background 0.3s, color 0.3s;
 }
 
-/* ─── CURSOR FIX ─── */
-.cursor {
-position: fixed;
-width: 12px; height: 12px;
-background: var(–cursor-color);
-border-radius: 50%;
-pointer-events: none;
-z-index: 99999;
-transition: transform 0.1s, background 0.3s;
-/* REMOVED mix-blend-mode: difference — causait l’invisibilité */
-}
-.cursor-ring {
-position: fixed;
-width: 36px; height: 36px;
-border: 1.5px solid var(–cursor-ring-color);
-border-radius: 50%;
-pointer-events: none;
-z-index: 99998;
-transition: transform 0.15s, width 0.2s, height 0.2s, border-color 0.3s;
-transform: translate(-12px, -12px);
-}
-/* Hover effect sur éléments cliquables */
-body:has(button:hover) .cursor,
-body:has(a:hover) .cursor,
-body:has(.card:hover) .cursor,
-body:has(.specialty-btn:hover) .cursor,
-body:has(.patient-card:hover) .cursor {
-transform: scale(2.5);
-background: var(–ig-pink);
-}
+.cursor { position: fixed; width: 12px; height: 12px; background: var(–cursor-color); border-radius: 50%; pointer-events: none; z-index: 99999; transition: transform 0.1s, background 0.3s; }
+.cursor-ring { position: fixed; width: 36px; height: 36px; border: 1.5px solid var(–cursor-ring-color); border-radius: 50%; pointer-events: none; z-index: 99998; transition: transform 0.15s; transform: translate(-12px, -12px); }
 
-/* ─── DARK/LIGHT MODE BUTTON ─── */
-.theme-btn {
-background: var(–card2);
-border: 1px solid var(–border);
-border-radius: 50px;
-padding: 7px 14px;
-cursor: pointer;
-display: flex; align-items: center; gap: 6px;
-font-size: 0.85rem;
-color: var(–text);
-font-family: ‘DM Sans’, sans-serif;
-transition: all 0.25s;
-white-space: nowrap;
-}
-.theme-btn:hover {
-border-color: var(–ig-pink);
-background: var(–card);
-}
+.theme-btn { background: var(–card2); border: 1px solid var(–border); border-radius: 50px; padding: 7px 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(–text); font-family: ‘DM Sans’, sans-serif; transition: all 0.25s; white-space: nowrap; }
+.theme-btn:hover { border-color: var(–ig-pink); background: var(–card); }
 .theme-icon { font-size: 1rem; transition: transform 0.4s; }
 body.light-mode .theme-icon { transform: rotate(180deg); }
 
-/* Animated background */
 .bg-orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
 .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15; animation: float 12s ease-in-out infinite; }
-.orb-1 { width: 500px; height: 500px; background: var(–ig-purple); top: -100px; left: -100px; animation-delay: 0s; }
+.orb-1 { width: 500px; height: 500px; background: var(–ig-purple); top: -100px; left: -100px; }
 .orb-2 { width: 400px; height: 400px; background: var(–ig-pink); top: 40%; right: -100px; animation-delay: -4s; }
 .orb-3 { width: 350px; height: 350px; background: var(–ig-orange); bottom: -100px; left: 30%; animation-delay: -8s; }
 body.light-mode .orb { opacity: 0.07; }
+@keyframes float { 0%,100% { transform: translateY(0) scale(1); } 33% { transform: translateY(-30px) scale(1.05); } 66% { transform: translateY(20px) scale(0.95); } }
 
-@keyframes float {
-0%, 100% { transform: translateY(0px) scale(1); }
-33% { transform: translateY(-30px) scale(1.05); }
-66% { transform: translateY(20px) scale(0.95); }
-}
-
-/* NAV */
-nav {
-position: fixed; top: 0; left: 0; right: 0;
-z-index: 1000;
-background: rgba(5,5,8,0.85);
-backdrop-filter: blur(20px);
-border-bottom: 1px solid var(–border);
-padding: 0 2rem;
-height: 70px;
-display: flex; align-items: center; justify-content: space-between;
-gap: 1rem;
-transition: background 0.3s;
-}
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(5,5,8,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(–border); padding: 0 2rem; height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; transition: background 0.3s; }
 body.light-mode nav { background: rgba(244,244,248,0.88); }
 
 .nav-brand { display: flex; align-items: center; gap: 12px; }
-.nav-logo {
-width: 40px; height: 40px;
-background: var(–ig-grad);
-border-radius: 12px;
-display: flex; align-items: center; justify-content: center;
-font-size: 1.2rem;
-animation: pulse-logo 2s ease-in-out infinite;
-}
-@keyframes pulse-logo {
-0%, 100% { box-shadow: 0 0 0 0 rgba(253,29,29,0.4); }
-50% { box-shadow: 0 0 0 12px rgba(253,29,29,0); }
-}
+.nav-logo { width: 40px; height: 40px; background: var(–ig-grad); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; animation: pulse-logo 2s ease-in-out infinite; }
+@keyframes pulse-logo { 0%,100% { box-shadow: 0 0 0 0 rgba(253,29,29,0.4); } 50% { box-shadow: 0 0 0 12px rgba(253,29,29,0); } }
 .nav-title { font-family: ‘Syne’, sans-serif; font-weight: 800; font-size: 1.1rem; }
 .nav-title span { background: var(–ig-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
 .nav-links { display: flex; gap: 0.25rem; }
-.nav-btn {
-background: none; border: none; color: var(–text2);
-font-family: ‘DM Sans’, sans-serif; font-size: 0.85rem;
-padding: 8px 16px; border-radius: 10px; cursor: pointer;
-transition: all 0.2s;
-}
+.nav-btn { background: none; border: none; color: var(–text2); font-family: ‘DM Sans’, sans-serif; font-size: 0.85rem; padding: 8px 16px; border-radius: 10px; cursor: pointer; transition: all 0.2s; }
 .nav-btn:hover, .nav-btn.active { background: rgba(255,255,255,0.07); color: var(–text); }
 .nav-btn.active { background: var(–ig-grad); color: white; font-weight: 500; }
 body.light-mode .nav-btn:hover { background: rgba(0,0,0,0.06); }
-
 .nav-right { display: flex; align-items: center; gap: 0.75rem; }
-
-.nav-author {
-font-size: 0.75rem; color: var(–text);
-text-align: right; line-height: 1.6;
-background: rgba(253,29,29,0.12);
-border: 1px solid var(–ig-pink);
-padding: 6px 12px; border-radius: 10px;
-}
+.nav-author { font-size: 0.75rem; color: var(–text); text-align: right; line-height: 1.6; background: rgba(253,29,29,0.12); border: 1px solid var(–ig-pink); padding: 6px 12px; border-radius: 10px; }
 .nav-author strong { color: var(–ig-orange); display: block; font-size: 0.85rem; }
 
-/* PAGES */
 .page { display: none; padding-top: 90px; min-height: 100vh; position: relative; z-index: 1; }
 .page.active { display: block; animation: fadeIn 0.4s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* HERO */
 .hero { text-align: center; padding: 4rem 2rem 3rem; max-width: 900px; margin: 0 auto; }
-.hero-badge {
-display: inline-flex; align-items: center; gap: 8px;
-background: rgba(131,58,180,0.15);
-border: 1px solid rgba(131,58,180,0.3);
-border-radius: 50px; padding: 6px 18px;
-font-size: 0.8rem; color: var(–ig-orange);
-margin-bottom: 2rem;
-animation: fadeIn 0.6s ease;
-}
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(131,58,180,0.15); border: 1px solid rgba(131,58,180,0.3); border-radius: 50px; padding: 6px 18px; font-size: 0.8rem; color: var(–ig-orange); margin-bottom: 2rem; }
 .hero h1 { font-family: ‘Syne’, sans-serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; }
 .hero h1 .grad { background: var(–ig-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .hero p { font-size: 1.1rem; color: var(–text2); max-width: 600px; margin: 0 auto 2.5rem; line-height: 1.7; }
 .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-/* BUTTONS */
-.btn {
-display: inline-flex; align-items: center; gap: 8px;
-padding: 14px 28px; border-radius: 14px;
-font-family: ‘DM Sans’, sans-serif; font-size: 0.95rem; font-weight: 500;
-border: none; cursor: pointer;
-transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-position: relative; overflow: hidden;
-}
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 14px; font-family: ‘DM Sans’, sans-serif; font-size: 0.95rem; font-weight: 500; border: none; cursor: pointer; transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden; }
 .btn::after { content: ‘’; position: absolute; inset: 0; background: rgba(255,255,255,0.1); opacity: 0; transition: opacity 0.2s; }
 .btn:hover::after { opacity: 1; }
 .btn:hover { transform: translateY(-3px) scale(1.02); }
 .btn:active { transform: scale(0.97); }
 .btn-primary { background: var(–ig-grad); color: white; box-shadow: 0 4px 20px rgba(253,29,29,0.3); }
-.btn-primary:hover { box-shadow: 0 8px 30px rgba(253,29,29,0.5); }
 .btn-secondary { background: var(–card2); color: var(–text); border: 1px solid var(–border); }
-.btn-secondary:hover { border-color: rgba(255,255,255,0.2); }
-.btn-vibrate:hover { animation: vibrate 0.3s ease; }
-@keyframes vibrate {
-0%,100% { transform: translateY(-3px) scale(1.02); }
-25% { transform: translateY(-3px) scale(1.02) rotate(-1deg); }
-75% { transform: translateY(-3px) scale(1.02) rotate(1deg); }
-}
 
-/* STATS STRIP */
-.stats-strip {
-display: grid; grid-template-columns: repeat(4, 1fr);
-gap: 1px; background: var(–border);
-border: 1px solid var(–border); border-radius: var(–radius);
-overflow: hidden; margin: 2rem auto; max-width: 900px;
-}
+.stats-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(–border); border: 1px solid var(–border); border-radius: var(–radius); overflow: hidden; margin: 2rem auto; max-width: 900px; }
 .stat-item { background: var(–card); padding: 1.5rem; text-align: center; transition: background 0.3s; }
 .stat-val { font-family: ‘Syne’, sans-serif; font-size: 2rem; font-weight: 800; background: var(–ig-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .stat-lbl { font-size: 0.8rem; color: var(–text2); margin-top: 4px; }
 
-/* CARDS GRID */
 .section { padding: 2rem; max-width: 1200px; margin: 0 auto; }
 .section-title { font-family: ‘Syne’, sans-serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 1.5rem; }
 .section-title span { background: var(–ig-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
 .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; }
 
-.card {
-background: var(–card); border: 1px solid var(–border);
-border-radius: var(–radius); padding: 1.5rem;
-transition: all 0.3s; position: relative; overflow: hidden;
-}
+.card { background: var(–card); border: 1px solid var(–border); border-radius: var(–radius); padding: 1.5rem; transition: all 0.3s; position: relative; overflow: hidden; }
 .card::before { content: ‘’; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(–ig-grad); opacity: 0; transition: opacity 0.3s; }
 .card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.12); box-shadow: var(–shadow); }
 .card:hover::before { opacity: 1; }
-body.light-mode .card:hover { border-color: rgba(0,0,0,0.15); }
 .card-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1rem; }
 .card h3 { font-family: ‘Syne’, sans-serif; font-size: 1.1rem; margin-bottom: 0.5rem; }
 .card p { font-size: 0.9rem; color: var(–text2); line-height: 1.6; }
 
-/* FORM */
 .form-section { background: var(–card); border: 1px solid var(–border); border-radius: var(–radius); padding: 2rem; margin-bottom: 2rem; transition: background 0.3s; }
 .form-header { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(–border); }
 .form-header h2 { font-family: ‘Syne’, sans-serif; font-size: 1.3rem; }
@@ -262,46 +135,25 @@ body.light-mode .card:hover { border-color: rgba(0,0,0,0.15); }
 .form-group { display: flex; flex-direction: column; gap: 6px; }
 .form-group.full { grid-column: 1 / -1; }
 label { font-size: 0.8rem; color: var(–text2); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
-input, select, textarea {
-background: var(–bg2); border: 1px solid var(–border);
-border-radius: 10px; color: var(–text);
-font-family: ‘DM Sans’, sans-serif; font-size: 0.95rem;
-padding: 12px 14px; transition: all 0.2s; outline: none;
-}
+input, select, textarea { background: var(–bg2); border: 1px solid var(–border); border-radius: 10px; color: var(–text); font-family: ‘DM Sans’, sans-serif; font-size: 0.95rem; padding: 12px 14px; transition: all 0.2s; outline: none; }
 input:focus, select:focus, textarea:focus { border-color: var(–ig-pink); box-shadow: 0 0 0 3px rgba(253,29,29,0.1); }
-input:hover, select:hover { border-color: rgba(255,255,255,0.15); }
-body.light-mode input:hover, body.light-mode select:hover { border-color: rgba(0,0,0,0.2); }
 textarea { resize: vertical; min-height: 80px; }
 select option { background: var(–bg2); }
 
-/* SPECIALTIES */
 .specialty-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
-.specialty-btn {
-background: var(–card2); border: 1px solid var(–border);
-border-radius: 12px; padding: 0.75rem;
-text-align: center; cursor: pointer;
-transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-font-size: 0.85rem; color: var(–text2);
-}
-.specialty-btn:hover, .specialty-btn.selected {
-background: var(–ig-grad); border-color: transparent;
-color: white; transform: scale(1.05);
-box-shadow: 0 4px 20px rgba(253,29,29,0.3);
-}
+.specialty-btn { background: var(–card2); border: 1px solid var(–border); border-radius: 12px; padding: 0.75rem; text-align: center; cursor: pointer; transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); font-size: 0.85rem; color: var(–text2); }
+.specialty-btn:hover, .specialty-btn.selected { background: var(–ig-grad); border-color: transparent; color: white; transform: scale(1.05); box-shadow: 0 4px 20px rgba(253,29,29,0.3); }
 .specialty-btn .icon { font-size: 1.5rem; display: block; margin-bottom: 4px; }
 
-/* TIMELINE */
 .timeline { position: relative; padding-left: 2rem; }
 .timeline::before { content: ‘’; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(–ig-purple), var(–ig-pink), var(–ig-orange)); }
-.timeline-item { position: relative; margin-bottom: 1.5rem; animation: slideIn 0.4s ease; }
+.timeline-item { position: relative; margin-bottom: 1.5rem; }
 .timeline-dot { position: absolute; left: -2rem; width: 18px; height: 18px; border-radius: 50%; background: var(–ig-grad); border: 3px solid var(–bg); top: 4px; }
-.timeline-card { background: var(–card2); border: 1px solid var(–border); border-radius: 12px; padding: 1rem; transition: background 0.3s; }
+.timeline-card { background: var(–card2); border: 1px solid var(–border); border-radius: 12px; padding: 1rem; }
 .timeline-date { font-size: 0.75rem; color: var(–ig-orange); margin-bottom: 4px; }
 .timeline-title { font-weight: 600; margin-bottom: 4px; }
 .timeline-body { font-size: 0.85rem; color: var(–text2); }
-@keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
 
-/* BADGES */
 .badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 500; }
 .badge-green { background: rgba(0,230,118,0.15); color: var(–green); }
 .badge-red { background: rgba(255,23,68,0.15); color: var(–red); }
@@ -309,38 +161,24 @@ box-shadow: 0 4px 20px rgba(253,29,29,0.3);
 .badge-cyan { background: rgba(0,229,255,0.15); color: var(–cyan); }
 .badge-ig { background: rgba(253,29,29,0.15); color: var(–ig-pink); }
 
-/* CHART CONTAINERS */
 .chart-wrap { background: var(–card); border: 1px solid var(–border); border-radius: var(–radius); padding: 1.5rem; transition: background 0.3s; }
 .chart-title { font-family: ‘Syne’, sans-serif; font-size: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
 canvas { max-height: 280px; }
 
-/* PROGRESS BARS */
 .progress-item { margin-bottom: 1rem; }
 .progress-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; }
 .progress-val { color: var(–ig-orange); font-weight: 600; }
 .progress-bar { height: 8px; background: var(–bg2); border-radius: 50px; overflow: hidden; }
 .progress-fill { height: 100%; border-radius: 50px; background: var(–ig-grad); transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
-/* PATIENT CARD */
-.patient-card {
-background: var(–card2); border: 1px solid var(–border);
-border-radius: var(–radius); padding: 1.25rem;
-display: flex; gap: 1rem; align-items: flex-start;
-transition: all 0.3s; cursor: pointer;
-}
+.patient-card { background: var(–card2); border: 1px solid var(–border); border-radius: var(–radius); padding: 1.25rem; display: flex; gap: 1rem; align-items: flex-start; transition: all 0.3s; cursor: pointer; }
 .patient-card:hover { border-color: var(–ig-pink); transform: translateX(4px); }
 .patient-avatar { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; background: var(–ig-grad); }
 .patient-info h4 { font-weight: 600; margin-bottom: 4px; }
 .patient-info p { font-size: 0.82rem; color: var(–text2); }
 .patient-meta { margin-left: auto; text-align: right; }
 
-/* ORDONNANCE */
-.ordonnance {
-background: linear-gradient(135deg, var(–card) 0%, var(–card2) 100%);
-border: 1px solid rgba(131,58,180,0.3);
-border-radius: var(–radius); padding: 2rem;
-position: relative; overflow: hidden;
-}
+.ordonnance { background: linear-gradient(135deg, var(–card) 0%, var(–card2) 100%); border: 1px solid rgba(131,58,180,0.3); border-radius: var(–radius); padding: 2rem; position: relative; overflow: hidden; }
 .ordonnance::before { content: ‘⚕’; position: absolute; right: 1.5rem; top: 1rem; font-size: 4rem; opacity: 0.05; }
 .ordonnance-header { display: flex; justify-content: space-between; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed var(–border); }
 .ordonnance-title { font-family: ‘Syne’, sans-serif; font-size: 1.2rem; }
@@ -348,7 +186,6 @@ position: relative; overflow: hidden;
 body.light-mode .ordonnance-item { background: rgba(0,0,0,0.03); }
 .ord-num { width: 28px; height: 28px; border-radius: 8px; background: var(–ig-grad); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
 
-/* VITALS */
 .vitals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; }
 .vital-card { background: var(–card2); border: 1px solid var(–border); border-radius: 14px; padding: 1rem; text-align: center; transition: all 0.3s; }
 .vital-card:hover { transform: translateY(-4px); border-color: var(–ig-pink); }
@@ -356,52 +193,28 @@ body.light-mode .ordonnance-item { background: rgba(0,0,0,0.03); }
 .vital-lbl { font-size: 0.75rem; color: var(–text2); margin-top: 4px; }
 .vital-status { font-size: 0.7rem; margin-top: 4px; }
 
-/* NOTIFICATION */
-.notif {
-position: fixed; top: 80px; right: 20px;
-background: var(–card2); border: 1px solid var(–ig-pink);
-border-radius: 14px; padding: 1rem 1.5rem;
-max-width: 320px; z-index: 2000;
-animation: slideNotif 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-box-shadow: 0 8px 30px rgba(253,29,29,0.2);
-}
+.notif { position: fixed; top: 80px; right: 20px; background: var(–card2); border: 1px solid var(–ig-pink); border-radius: 14px; padding: 1rem 1.5rem; max-width: 320px; z-index: 2000; animation: slideNotif 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 8px 30px rgba(253,29,29,0.2); }
 @keyframes slideNotif { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 .notif-title { font-weight: 600; margin-bottom: 4px; font-size: 0.9rem; }
 .notif-body { font-size: 0.82rem; color: var(–text2); }
 
-/* MODAL */
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 3000; display: none; align-items: center; justify-content: center; padding: 1rem; }
-.modal-overlay.open { display: flex; animation: fadeIn 0.2s ease; }
-.modal { background: var(–card); border: 1px solid var(–border); border-radius: var(–radius); padding: 2rem; max-width: 500px; width: 100%; animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
-@keyframes scaleIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-/* SEARCH */
 .search-bar { position: relative; margin-bottom: 1.5rem; }
 .search-bar input { width: 100%; padding-left: 44px; background: var(–card); }
 .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(–text2); font-size: 1rem; }
 
-/* IA BOX */
-.ai-box {
-background: linear-gradient(135deg, rgba(131,58,180,0.1), rgba(253,29,29,0.1));
-border: 1px solid rgba(131,58,180,0.3);
-border-radius: var(–radius); padding: 1.5rem;
-position: relative; overflow: hidden;
-}
+.ai-box { background: linear-gradient(135deg, rgba(131,58,180,0.1), rgba(253,29,29,0.1)); border: 1px solid rgba(131,58,180,0.3); border-radius: var(–radius); padding: 1.5rem; position: relative; overflow: hidden; }
 .ai-box::after { content: ‘’; position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(131,58,180,0.05) 0%, transparent 60%); animation: rotate 20s linear infinite; }
 @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 .ai-label { display: inline-flex; align-items: center; gap: 6px; background: var(–ig-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
 .ai-text { font-size: 0.95rem; line-height: 1.7; color: var(–text); position: relative; z-index: 1; }
 
-/* FOOTER */
 footer { text-align: center; padding: 2rem; border-top: 1px solid var(–border); color: var(–text2); font-size: 0.8rem; position: relative; z-index: 1; }
 footer strong { background: var(–ig-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-/* SCROLLBAR */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(–bg); }
 ::-webkit-scrollbar-thumb { background: var(–ig-pink); border-radius: 3px; }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
 .nav-links { display: none; }
 .stats-strip { grid-template-columns: repeat(2, 1fr); }
@@ -413,23 +226,49 @@ footer strong { background: var(–ig-grad); -webkit-background-clip: text; -web
 .divider { height: 1px; background: var(–border); margin: 1.5rem 0; }
 .text-grad { background: var(–ig-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-/* Mobile nav */
+/* CORRECTION 2 : MOBILE NAV SCROLLABLE */
 .mobile-nav {
 display: none;
 position: fixed; bottom: 0; left: 0; right: 0;
-background: rgba(5,5,8,0.95); backdrop-filter: blur(20px);
+background: rgba(5,5,8,0.95);
+backdrop-filter: blur(20px);
 border-top: 1px solid var(–border);
-padding: 0.75rem 1rem;
-z-index: 1000; gap: 0.25rem;
+padding: 0.75rem 0.5rem;
+z-index: 1000;
+/* Scroll horizontal activé */
+overflow-x: auto;
+overflow-y: hidden;
+-webkit-overflow-scrolling: touch;
+white-space: nowrap;
+scrollbar-width: none;
+gap: 0.25rem;
 }
+.mobile-nav::-webkit-scrollbar { display: none; }
 body.light-mode .mobile-nav { background: rgba(244,244,248,0.95); }
-@media (max-width: 768px) { .mobile-nav { display: flex; justify-content: space-around; } .page { padding-bottom: 80px; } }
-.mob-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; background: none; border: none; color: var(–text2); font-size: 0.65rem; cursor: pointer; padding: 6px; border-radius: 10px; transition: all 0.2s; }
+
+@media (max-width: 768px) {
+.mobile-nav { display: flex; }
+.page { padding-bottom: 80px; }
+}
+
+.mob-btn {
+flex-shrink: 0;
+min-width: 68px;
+display: inline-flex;
+flex-direction: column;
+align-items: center;
+gap: 3px;
+background: none;
+border: none;
+color: var(–text2);
+font-size: 0.65rem;
+cursor: pointer;
+padding: 6px 10px;
+border-radius: 10px;
+transition: all 0.2s;
+}
 .mob-btn .icon { font-size: 1.2rem; }
 .mob-btn.active { color: var(–ig-orange); background: rgba(252,176,69,0.1); }
-
-.loader { display: inline-block; width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.1); border-top-color: var(–ig-pink); border-radius: 50%; animation: spin 0.6s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
 
 .ig-border { padding: 3px; background: var(–ig-grad); border-radius: 16px; }
 .ig-border-inner { background: var(–card); border-radius: 14px; padding: 1.5rem; transition: background 0.3s; }
@@ -447,8 +286,6 @@ body.light-mode .mobile-nav { background: rgba(244,244,248,0.95); }
   <div class="orb orb-3"></div>
 </div>
 
-<!-- NAV -->
-
 <nav>
   <div class="nav-brand">
     <div class="nav-logo">🏥</div>
@@ -458,15 +295,14 @@ body.light-mode .mobile-nav { background: rgba(244,244,248,0.95); }
     </div>
   </div>
   <div class="nav-links">
-    <button class="nav-btn active btn-vibrate" onclick="showPage('accueil', this)">🏠 Accueil</button>
-    <button class="nav-btn btn-vibrate" onclick="showPage('collecte', this)">📋 Collecte</button>
-    <button class="nav-btn btn-vibrate" onclick="showPage('suivi', this)">📈 Suivi</button>
-    <button class="nav-btn btn-vibrate" onclick="showPage('analyses', this)">🔬 Analyses</button>
-    <button class="nav-btn btn-vibrate" onclick="showPage('carnet', this)">🗂 Carnet</button>
-    <button class="nav-btn btn-vibrate" onclick="showPage('ordonnances', this)">💊 Ordonnances</button>
+    <button class="nav-btn active" onclick="showPage('accueil', this)">🏠 Accueil</button>
+    <button class="nav-btn" onclick="showPage('collecte', this)">📋 Collecte</button>
+    <button class="nav-btn" onclick="showPage('suivi', this)">📈 Suivi</button>
+    <button class="nav-btn" onclick="showPage('analyses', this)">🔬 Analyses</button>
+    <button class="nav-btn" onclick="showPage('carnet', this)">🗂 Carnet</button>
+    <button class="nav-btn" onclick="showPage('ordonnances', this)">💊 Ordonnances</button>
   </div>
   <div class="nav-right">
-    <!-- BOUTON MODE NUIT / JOUR -->
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">
       <span class="theme-icon" id="themeIcon">🌙</span>
       <span id="themeLabel">Mode nuit</span>
@@ -478,7 +314,7 @@ body.light-mode .mobile-nav { background: rgba(244,244,248,0.95); }
   </div>
 </nav>
 
-<!-- MOBILE NAV -->
+<!-- CORRECTION 2 : Ordonnances ajouté dans mobile nav + scroll -->
 
 <div class="mobile-nav">
   <button class="mob-btn active" onclick="showPage('accueil', this)"><span class="icon">🏠</span>Accueil</button>
@@ -486,9 +322,8 @@ body.light-mode .mobile-nav { background: rgba(244,244,248,0.95); }
   <button class="mob-btn" onclick="showPage('suivi', this)"><span class="icon">📈</span>Suivi</button>
   <button class="mob-btn" onclick="showPage('analyses', this)"><span class="icon">🔬</span>Analyses</button>
   <button class="mob-btn" onclick="showPage('carnet', this)"><span class="icon">🗂</span>Carnet</button>
+  <button class="mob-btn" onclick="showPage('ordonnances', this)"><span class="icon">💊</span>Ordonnances</button>
 </div>
-
-<!-- PAGE: ACCUEIL -->
 
 <div class="page active" id="page-accueil">
   <div class="hero">
@@ -496,18 +331,16 @@ body.light-mode .mobile-nav { background: rgba(244,244,248,0.95); }
     <h1>L'Hôpital <span class="grad">Intelligent</span><br>du Futur</h1>
     <p>Collectez, analysez et suivez vos données médicales en temps réel. Consultations, examens, ordonnances — tout depuis votre écran.</p>
     <div class="hero-actions">
-      <button class="btn btn-primary btn-vibrate" onclick="showPage('collecte')">🚀 Nouvelle consultation</button>
-      <button class="btn btn-secondary btn-vibrate" onclick="showPage('carnet')">🗂 Mon carnet médical</button>
+      <button class="btn btn-primary" onclick="showPage('collecte')">🚀 Nouvelle consultation</button>
+      <button class="btn btn-secondary" onclick="showPage('carnet')">🗂 Mon carnet médical</button>
     </div>
   </div>
-
   <div class="stats-strip">
     <div class="stat-item"><div class="stat-val" id="stat-patients">0</div><div class="stat-lbl">Patients enregistrés</div></div>
     <div class="stat-item"><div class="stat-val" id="stat-consultations">0</div><div class="stat-lbl">Consultations</div></div>
     <div class="stat-item"><div class="stat-val" id="stat-specialites">12</div><div class="stat-lbl">Spécialités</div></div>
     <div class="stat-item"><div class="stat-val">IA</div><div class="stat-lbl">Analyse intelligente</div></div>
   </div>
-
   <div class="section">
     <div class="section-title">Nos <span>Spécialités</span></div>
     <div class="grid-3">
@@ -519,136 +352,105 @@ body.light-mode .mobile-nav { background: rgba(244,244,248,0.95); }
       <div class="card" onclick="selectSpecialty('Médecine Générale'); showPage('collecte')"><div class="card-icon" style="background:rgba(252,176,69,0.1)">🩺</div><h3>Médecine Générale</h3><p>Consultations générales, prévention et orientation vers les spécialistes.</p></div>
     </div>
   </div>
-
   <div class="section">
     <div class="section-title">Fonctionnalités <span>Clés</span></div>
     <div class="grid-3">
-      <div class="ig-border"><div class="ig-border-inner"><div style="font-size:2rem;margin-bottom:0.75rem">📊</div><h3 style="font-family:Syne,sans-serif;margin-bottom:0.5rem">Analyse Descriptive</h3><p style="font-size:0.9rem;color:var(--text2)">Graphiques, pourcentages et interprétations automatiques de vos données.</p></div></div>
-      <div class="ig-border"><div class="ig-border-inner"><div style="font-size:2rem;margin-bottom:0.75rem">🤖</div><h3 style="font-family:Syne,sans-serif;margin-bottom:0.5rem">IA Médicale</h3><p style="font-size:0.9rem;color:var(--text2)">Suggestions diagnostiques et ordonnances basées sur vos symptômes et examens.</p></div></div>
-      <div class="ig-border"><div class="ig-border-inner"><div style="font-size:2rem;margin-bottom:0.75rem">🌐</div><h3 style="font-family:Syne,sans-serif;margin-bottom:0.5rem">Téléconsultation</h3><p style="font-size:0.9rem;color:var(--text2)">Consultations à distance pour les patients de toutes régions et pays.</p></div></div>
+      <div class="ig-border"><div class="ig-border-inner"><div style="font-size:2rem;margin-bottom:0.75rem">📊</div><h3 style="font-family:Syne,sans-serif;margin-bottom:0.5rem">Analyse Descriptive</h3><p style="font-size:0.9rem;color:var(--text2)">Graphiques, pourcentages et interprétations automatiques.</p></div></div>
+      <div class="ig-border"><div class="ig-border-inner"><div style="font-size:2rem;margin-bottom:0.75rem">🤖</div><h3 style="font-family:Syne,sans-serif;margin-bottom:0.5rem">IA Médicale</h3><p style="font-size:0.9rem;color:var(--text2)">Suggestions diagnostiques et ordonnances basées sur vos symptômes.</p></div></div>
+      <div class="ig-border"><div class="ig-border-inner"><div style="font-size:2rem;margin-bottom:0.75rem">🌐</div><h3 style="font-family:Syne,sans-serif;margin-bottom:0.5rem">Téléconsultation</h3><p style="font-size:0.9rem;color:var(--text2)">Consultations à distance pour les patients de toutes régions.</p></div></div>
     </div>
   </div>
 </div>
-
-<!-- PAGE: COLLECTE -->
 
 <div class="page" id="page-collecte">
   <div class="section">
     <div class="section-title">📋 Collecte des <span>Données Patient</span></div>
-
-```
-<div class="form-section" style="border-color:rgba(131,58,180,0.3)">
-  <div class="form-header">
-    <span style="font-size:1.5rem">🗂</span>
-    <div><h2>Carnet Médical (Optionnel)</h2><p style="font-size:0.82rem;color:var(--text2)">Pour patients récurrents autorisés — activation du suivi automatique</p></div>
-    <label style="margin-left:auto;display:flex;align-items:center;gap:8px;cursor:pointer">
-      <span style="font-size:0.85rem;color:var(--text2)">Activer</span>
-      <div class="toggle" id="toggle-carnet" onclick="toggleCarnet()" style="width:44px;height:24px;background:var(--border);border-radius:12px;position:relative;cursor:pointer;transition:background 0.3s">
-        <div id="toggle-knob" style="position:absolute;top:3px;left:3px;width:18px;height:18px;background:white;border-radius:9px;transition:left 0.3s"></div>
+    <div class="form-section" style="border-color:rgba(131,58,180,0.3)">
+      <div class="form-header">
+        <span style="font-size:1.5rem">🗂</span>
+        <div><h2>Carnet Médical (Optionnel)</h2><p style="font-size:0.82rem;color:var(--text2)">Pour patients récurrents — activation du suivi automatique</p></div>
+        <label style="margin-left:auto;display:flex;align-items:center;gap:8px;cursor:pointer">
+          <span style="font-size:0.85rem;color:var(--text2)">Activer</span>
+          <div id="toggle-carnet" onclick="toggleCarnet()" style="width:44px;height:24px;background:var(--border);border-radius:12px;position:relative;cursor:pointer;transition:background 0.3s">
+            <div id="toggle-knob" style="position:absolute;top:3px;left:3px;width:18px;height:18px;background:white;border-radius:9px;transition:left 0.3s"></div>
+          </div>
+        </label>
       </div>
-    </label>
-  </div>
-  <div id="carnet-fields" style="display:none">
-    <div class="form-grid">
-      <div class="form-group"><label>Identifiant patient *</label><input type="text" id="patient-id" placeholder="ID unique (ex: PAT-001)"></div>
-      <div class="form-group"><label>Mot de passe médical</label><input type="password" id="patient-pwd" placeholder="••••••••"></div>
+      <div id="carnet-fields" style="display:none">
+        <div class="form-grid">
+          <div class="form-group"><label>Identifiant patient *</label><input type="text" id="patient-id" placeholder="ID unique (ex: PAT-001)"></div>
+          <div class="form-group"><label>Mot de passe médical</label><input type="password" id="patient-pwd" placeholder="••••••••"></div>
+        </div>
+      </div>
     </div>
-    <div class="ai-box" style="margin-top:1rem">
-      <div class="ai-label">🤖 IA — Suivi automatique</div>
-      <div class="ai-text">En activant le carnet médical, l'IA analysera automatiquement vos antécédents et alertera votre médecin en cas d'anomalie détectée.</div>
+    <div class="form-section">
+      <div class="form-header"><span style="font-size:1.5rem">👤</span><h2>Informations Personnelles</h2></div>
+      <div class="form-grid">
+        <div class="form-group"><label>Nom complet *</label><input type="text" id="nom" placeholder="Ex: Jean Dupont"></div>
+        <div class="form-group"><label>Date de naissance *</label><input type="date" id="dob"></div>
+        <div class="form-group"><label>Sexe *</label><select id="sexe"><option value="">Sélectionner</option><option>Masculin</option><option>Féminin</option><option>Autre</option></select></div>
+        <div class="form-group"><label>Groupe sanguin</label><select id="groupe-sanguin"><option value="">Inconnu</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+        <div class="form-group"><label>Pays d'origine *</label><input type="text" id="pays" placeholder="Ex: Cameroun"></div>
+        <div class="form-group"><label>Ville de résidence *</label><input type="text" id="ville" placeholder="Ex: Yaoundé"></div>
+        <div class="form-group"><label>Téléphone</label><input type="tel" id="telephone" placeholder="+237 6XX XXX XXX"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="email" placeholder="patient@email.com"></div>
+      </div>
     </div>
+    <div class="form-section">
+      <div class="form-header"><span style="font-size:1.5rem">💓</span><h2>Signes Vitaux</h2></div>
+      <div class="form-grid">
+        <div class="form-group"><label>Température (°C)</label><input type="number" id="temperature" placeholder="37.0" step="0.1" min="35" max="42"></div>
+        <div class="form-group"><label>Pression artérielle (mmHg)</label><input type="text" id="pression" placeholder="120/80"></div>
+        <div class="form-group"><label>Fréquence cardiaque (bpm)</label><input type="number" id="fc" placeholder="75" min="40" max="200"></div>
+        <div class="form-group"><label>Saturation O2 (%)</label><input type="number" id="spo2" placeholder="98" min="70" max="100"></div>
+        <div class="form-group"><label>Poids (kg)</label><input type="number" id="poids" placeholder="70" min="1" max="300"></div>
+        <div class="form-group"><label>Taille (cm)</label><input type="number" id="taille" placeholder="170" min="50" max="250"></div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-header"><span style="font-size:1.5rem">🏥</span><h2>Spécialité & Maladie</h2></div>
+      <div class="specialty-grid">
+        <div class="specialty-btn" onclick="selectSpecialty('Cardiologie', this)"><span class="icon">❤️</span>Cardiologie</div>
+        <div class="specialty-btn" onclick="selectSpecialty('Neurologie', this)"><span class="icon">🧠</span>Neurologie</div>
+        <div class="specialty-btn" onclick="selectSpecialty('Pneumologie', this)"><span class="icon">🫁</span>Pneumologie</div>
+        <div class="specialty-btn" onclick="selectSpecialty('Pédiatrie', this)"><span class="icon">👶</span>Pédiatrie</div>
+        <div class="specialty-btn" onclick="selectSpecialty('Oncologie', this)"><span class="icon">🎗️</span>Oncologie</div>
+        <div class="specialty-btn" onclick="selectSpecialty('Dermatologie', this)"><span class="icon">🫀</span>Dermatologie</div>
+        <div class="specialty-btn" onclick="selectSpecialty('Gastro-entérologie', this)"><span class="icon">🫃</span>Gastro</div>
+        <div class="specialty-btn" onclick="selectSpecialty('Ophtalmologie', this)"><span class="icon">👁️</span>Ophtalmologie</div>
+        <div class="specialty-btn" onclick="selectSpecialty('Orthopédie', this)"><span class="icon">🦴</span>Orthopédie</div>
+        <div class="specialty-btn" onclick="selectSpecialty('Gynécologie', this)"><span class="icon">🌸</span>Gynécologie</div>
+        <div class="specialty-btn" onclick="selectSpecialty('Psychiatrie', this)"><span class="icon">🧘</span>Psychiatrie</div>
+        <div class="specialty-btn" onclick="selectSpecialty('Médecine Générale', this)"><span class="icon">🩺</span>Médecine Générale</div>
+      </div>
+      <div class="form-grid" style="margin-top:1rem">
+        <div class="form-group"><label>Spécialité sélectionnée</label><input type="text" id="specialite" placeholder="Cliquez sur une spécialité" readonly></div>
+        <div class="form-group"><label>Diagnostic / Maladie *</label><input type="text" id="maladie" placeholder="Ex: Hypertension artérielle"></div>
+        <div class="form-group"><label>Stade / Gravité</label><select id="gravite"><option value="">Sélectionner</option><option>Léger</option><option>Modéré</option><option>Sévère</option><option>Critique</option></select></div>
+        <div class="form-group"><label>Type de consultation</label><select id="type-consult"><option>Présentiel</option><option>Téléconsultation</option><option>Urgence</option><option>Suivi</option></select></div>
+        <div class="form-group full"><label>Symptômes principaux *</label><textarea id="symptomes" placeholder="Décrivez vos symptômes en détail..."></textarea></div>
+        <div class="form-group full"><label>Antécédents médicaux</label><textarea id="antecedents" placeholder="Diabète, hypertension, allergies..."></textarea></div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-header"><span style="font-size:1.5rem">🔬</span><h2>Résultats d'Examens</h2></div>
+      <div class="form-grid">
+        <div class="form-group"><label>Type d'examen</label><select id="type-examen"><option value="">Sélectionner</option><option>Prise de sang</option><option>Radiographie</option><option>Échographie</option><option>IRM</option><option>Scanner</option><option>ECG</option><option>Biopsie</option><option>Autre</option></select></div>
+        <div class="form-group"><label>Date de l'examen</label><input type="date" id="date-examen"></div>
+        <div class="form-group full"><label>Résultats & Observations</label><textarea id="resultats" placeholder="Résultats numériques, observations du médecin..."></textarea></div>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="submitForm()" style="width:100%;justify-content:center;padding:16px;font-size:1.05rem">🚀 Enregistrer & Analyser avec l'IA</button>
   </div>
 </div>
-
-<div class="form-section">
-  <div class="form-header"><span style="font-size:1.5rem">👤</span><h2>Informations Personnelles</h2></div>
-  <div class="form-grid">
-    <div class="form-group"><label>Nom complet *</label><input type="text" id="nom" placeholder="Ex: Jean Dupont"></div>
-    <div class="form-group"><label>Date de naissance *</label><input type="date" id="dob"></div>
-    <div class="form-group"><label>Sexe *</label><select id="sexe"><option value="">Sélectionner</option><option>Masculin</option><option>Féminin</option><option>Autre</option></select></div>
-    <div class="form-group"><label>Groupe sanguin</label><select id="groupe-sanguin"><option value="">Inconnu</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
-    <div class="form-group"><label>Pays d'origine *</label><input type="text" id="pays" placeholder="Ex: Cameroun"></div>
-    <div class="form-group"><label>Ville de résidence *</label><input type="text" id="ville" placeholder="Ex: Yaoundé"></div>
-    <div class="form-group"><label>Téléphone</label><input type="tel" id="telephone" placeholder="+237 6XX XXX XXX"></div>
-    <div class="form-group"><label>Email</label><input type="email" id="email" placeholder="patient@email.com"></div>
-  </div>
-</div>
-
-<div class="form-section">
-  <div class="form-header"><span style="font-size:1.5rem">💓</span><h2>Signes Vitaux</h2></div>
-  <div class="form-grid">
-    <div class="form-group"><label>Température (°C)</label><input type="number" id="temperature" placeholder="37.0" step="0.1" min="35" max="42"></div>
-    <div class="form-group"><label>Pression artérielle (mmHg)</label><input type="text" id="pression" placeholder="120/80"></div>
-    <div class="form-group"><label>Fréquence cardiaque (bpm)</label><input type="number" id="fc" placeholder="75" min="40" max="200"></div>
-    <div class="form-group"><label>Saturation O2 (%)</label><input type="number" id="spo2" placeholder="98" min="70" max="100"></div>
-    <div class="form-group"><label>Poids (kg)</label><input type="number" id="poids" placeholder="70" min="1" max="300"></div>
-    <div class="form-group"><label>Taille (cm)</label><input type="number" id="taille" placeholder="170" min="50" max="250"></div>
-  </div>
-</div>
-
-<div class="form-section">
-  <div class="form-header"><span style="font-size:1.5rem">🏥</span><h2>Spécialité & Maladie</h2></div>
-  <div class="specialty-grid">
-    <div class="specialty-btn" onclick="selectSpecialty('Cardiologie', this)"><span class="icon">❤️</span>Cardiologie</div>
-    <div class="specialty-btn" onclick="selectSpecialty('Neurologie', this)"><span class="icon">🧠</span>Neurologie</div>
-    <div class="specialty-btn" onclick="selectSpecialty('Pneumologie', this)"><span class="icon">🫁</span>Pneumologie</div>
-    <div class="specialty-btn" onclick="selectSpecialty('Pédiatrie', this)"><span class="icon">👶</span>Pédiatrie</div>
-    <div class="specialty-btn" onclick="selectSpecialty('Oncologie', this)"><span class="icon">🎗️</span>Oncologie</div>
-    <div class="specialty-btn" onclick="selectSpecialty('Dermatologie', this)"><span class="icon">🫀</span>Dermatologie</div>
-    <div class="specialty-btn" onclick="selectSpecialty('Gastro-entérologie', this)"><span class="icon">🫃</span>Gastro</div>
-    <div class="specialty-btn" onclick="selectSpecialty('Ophtalmologie', this)"><span class="icon">👁️</span>Ophtalmologie</div>
-    <div class="specialty-btn" onclick="selectSpecialty('Orthopédie', this)"><span class="icon">🦴</span>Orthopédie</div>
-    <div class="specialty-btn" onclick="selectSpecialty('Gynécologie', this)"><span class="icon">🌸</span>Gynécologie</div>
-    <div class="specialty-btn" onclick="selectSpecialty('Psychiatrie', this)"><span class="icon">🧘</span>Psychiatrie</div>
-    <div class="specialty-btn" onclick="selectSpecialty('Médecine Générale', this)"><span class="icon">🩺</span>Médecine Générale</div>
-  </div>
-  <div class="form-grid" style="margin-top:1rem">
-    <div class="form-group"><label>Spécialité sélectionnée</label><input type="text" id="specialite" placeholder="Cliquez sur une spécialité ci-dessus" readonly></div>
-    <div class="form-group"><label>Diagnostic / Maladie *</label><input type="text" id="maladie" placeholder="Ex: Hypertension artérielle"></div>
-    <div class="form-group"><label>Stade / Gravité</label><select id="gravite"><option value="">Sélectionner</option><option>Léger</option><option>Modéré</option><option>Sévère</option><option>Critique</option></select></div>
-    <div class="form-group"><label>Type de consultation</label><select id="type-consult"><option>Présentiel</option><option>Téléconsultation</option><option>Urgence</option><option>Suivi</option></select></div>
-    <div class="form-group full"><label>Symptômes principaux *</label><textarea id="symptomes" placeholder="Décrivez vos symptômes en détail..."></textarea></div>
-    <div class="form-group full"><label>Antécédents médicaux</label><textarea id="antecedents" placeholder="Diabète, hypertension, allergies..."></textarea></div>
-  </div>
-</div>
-
-<div class="form-section">
-  <div class="form-header"><span style="font-size:1.5rem">🔬</span><h2>Résultats d'Examens</h2></div>
-  <div class="form-grid">
-    <div class="form-group"><label>Type d'examen</label><select id="type-examen"><option value="">Sélectionner</option><option>Prise de sang</option><option>Radiographie</option><option>Échographie</option><option>IRM</option><option>Scanner</option><option>ECG</option><option>Endoscopie</option><option>Biopsie</option><option>Autre</option></select></div>
-    <div class="form-group"><label>Date de l'examen</label><input type="date" id="date-examen"></div>
-    <div class="form-group full"><label>Résultats & Observations</label><textarea id="resultats" placeholder="Résultats numériques, observations du médecin..."></textarea></div>
-  </div>
-</div>
-
-<button class="btn btn-primary btn-vibrate" onclick="submitForm()" style="width:100%;justify-content:center;padding:16px;font-size:1.05rem">
-  🚀 Enregistrer & Analyser avec l'IA
-</button>
-```
-
-  </div>
-</div>
-
-<!-- PAGE: SUIVI -->
 
 <div class="page" id="page-suivi">
   <div class="section">
     <div class="section-title">📈 Suivi des <span>Patients</span></div>
-    <div class="search-bar">
-      <span class="search-icon">🔍</span>
-      <input type="text" placeholder="Rechercher un patient..." oninput="filterPatients(this.value)">
-    </div>
-    <div id="patients-list">
-      <div style="text-align:center;padding:3rem;color:var(--text2)">
-        <div style="font-size:3rem;margin-bottom:1rem">📋</div>
-        <p>Aucun patient enregistré.<br>Commencez par la collecte de données.</p>
-        <button class="btn btn-primary btn-vibrate" onclick="showPage('collecte')" style="margin-top:1rem">+ Nouveau patient</button>
-      </div>
-    </div>
+    <div class="search-bar"><span class="search-icon">🔍</span><input type="text" placeholder="Rechercher un patient..." oninput="filterPatients(this.value)"></div>
+    <div id="patients-list"><div style="text-align:center;padding:3rem;color:var(--text2)"><div style="font-size:3rem;margin-bottom:1rem">📋</div><p>Aucun patient enregistré.<br>Commencez par la collecte de données.</p><button class="btn btn-primary" onclick="showPage('collecte')" style="margin-top:1rem">+ Nouveau patient</button></div></div>
   </div>
 </div>
-
-<!-- PAGE: ANALYSES -->
 
 <div class="page" id="page-analyses">
   <div class="section">
@@ -665,101 +467,60 @@ body.light-mode .mobile-nav { background: rgba(244,244,248,0.95); }
       <div class="chart-wrap"><div class="chart-title">⚠️ Distribution par Gravité</div><canvas id="chart-gravite"></canvas></div>
       <div class="chart-wrap"><div class="chart-title">📅 Évolution des Consultations</div><canvas id="chart-evolution"></canvas></div>
     </div>
-    <div style="margin-top:1.5rem">
-      <div class="chart-wrap">
-        <div class="chart-title">🩺 Top Maladies Diagnostiquées</div>
-        <div id="diseases-bars"><div style="color:var(--text2);text-align:center;padding:2rem">Aucune donnée disponible</div></div>
-      </div>
-    </div>
-    <div style="margin-top:1.5rem">
-      <div class="ai-box">
-        <div class="ai-label">🤖 Analyse IA Globale</div>
-        <div class="ai-text" id="ai-global-text">Enregistrez des patients pour obtenir une analyse descriptive complète avec interprétation intelligente des données épidémiologiques.</div>
-      </div>
-    </div>
+    <div style="margin-top:1.5rem"><div class="chart-wrap"><div class="chart-title">🩺 Top Maladies Diagnostiquées</div><div id="diseases-bars"><div style="color:var(--text2);text-align:center;padding:2rem">Aucune donnée disponible</div></div></div></div>
+    <div style="margin-top:1.5rem"><div class="ai-box"><div class="ai-label">🤖 Analyse IA Globale</div><div class="ai-text" id="ai-global-text">Enregistrez des patients pour obtenir une analyse descriptive complète.</div></div></div>
   </div>
 </div>
-
-<!-- PAGE: CARNET -->
 
 <div class="page" id="page-carnet">
   <div class="section">
     <div class="section-title">🗂 Carnet <span>Médical</span></div>
-
-```
-<!-- Recherche par ID -->
-<div class="form-section" style="border-color:rgba(131,58,180,0.3);margin-bottom:1.5rem">
-  <div class="form-header">
-    <span style="font-size:1.5rem">🔐</span>
-    <div><h2>Accès Carnet Personnel</h2><p style="font-size:0.82rem;color:var(--text2)">Entrez un ID patient pour consulter son dossier complet</p></div>
-  </div>
-  <div class="form-grid">
-    <div class="form-group"><label>Identifiant patient</label><input type="text" id="login-id" placeholder="Ex: PAT-001"></div>
-    <div class="form-group"><label>Mot de passe</label><input type="password" id="login-pwd" placeholder="••••••••"></div>
-  </div>
-  <button class="btn btn-primary btn-vibrate" onclick="loginCarnet()" style="margin-top:1rem">🔓 Accéder à mon carnet</button>
-</div>
-
-<!-- Dossier ouvert -->
-<div id="carnet-content" style="display:none"><div id="carnet-patient-info"></div></div>
-
-<!-- Liste de tous les patients enregistrés -->
-<div class="section-title" style="margin-top:1rem">👥 Tous les <span>Patients Enregistrés</span></div>
-<div id="carnet-patients-list">
-  <!-- Rempli dynamiquement -->
-</div>
-```
-
+    <div class="form-section" style="border-color:rgba(131,58,180,0.3);margin-bottom:1.5rem">
+      <div class="form-header"><span style="font-size:1.5rem">🔐</span><div><h2>Accès Carnet Personnel</h2><p style="font-size:0.82rem;color:var(--text2)">Entrez un ID patient pour consulter son dossier</p></div></div>
+      <div class="form-grid">
+        <div class="form-group"><label>Identifiant patient</label><input type="text" id="login-id" placeholder="Ex: PAT-001"></div>
+        <div class="form-group"><label>Mot de passe</label><input type="password" id="login-pwd" placeholder="••••••••"></div>
+      </div>
+      <button class="btn btn-primary" onclick="loginCarnet()" style="margin-top:1rem">🔓 Accéder à mon carnet</button>
+    </div>
+    <div id="carnet-content" style="display:none"><div id="carnet-patient-info"></div></div>
+    <div class="section-title" style="margin-top:1rem">👥 Tous les <span>Patients Enregistrés</span></div>
+    <div id="carnet-patients-list"></div>
   </div>
 </div>
-
-<!-- PAGE: ORDONNANCES -->
 
 <div class="page" id="page-ordonnances">
   <div class="section">
     <div class="section-title">💊 <span>Ordonnances</span> Générées</div>
-    <div id="ordonnances-list">
-      <!-- Rempli dynamiquement par renderOrdonnances() -->
-    </div>
+    <div id="ordonnances-list"></div>
   </div>
 </div>
-
-<!-- NOTIFICATION -->
 
 <div class="notif" id="notif" style="display:none">
   <div class="notif-title" id="notif-title">✅ Succès</div>
   <div class="notif-body" id="notif-body"></div>
 </div>
 
+<!-- CORRECTION 3 : "Application Developer" remplacé par MOHAMAT -->
+
 <footer>
   <strong>MediSmart AI</strong> — Application de collecte et analyse médicale<br>
-  Développé par <strong>NDAOBA MOHAMAT</strong> · Matricule : <strong>24G2687</strong> · TP INF232 EC2
+  Développé par <strong>MOHAMAT</strong> · Matricule : <strong>24G2687</strong> · TP INF232 EC2
 </footer>
 
 <script>
-// DATA
 let patients = JSON.parse(localStorage.getItem('medismart_patients') || '[]');
 let ordonnances = JSON.parse(localStorage.getItem('medismart_ordonnances') || '[]');
 
-// ─── CURSOR (FIXED) ───
+// CURSOR
 const cursor = document.getElementById('cursor');
 const ring = document.getElementById('cursorRing');
-let mouseX = 0, mouseY = 0;
-let ringX = 0, ringY = 0;
-
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
 document.addEventListener('mousemove', e => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
+  mouseX = e.clientX; mouseY = e.clientY;
   cursor.style.left = (mouseX - 6) + 'px';
   cursor.style.top = (mouseY - 6) + 'px';
-  // Ring follows with slight delay
-  ringX += (mouseX - 18 - ringX) * 0.15;
-  ringY += (mouseY - 18 - ringY) * 0.15;
-  ring.style.left = ringX + 'px';
-  ring.style.top = ringY + 'px';
 });
-
-// Smooth ring animation
 function animateRing() {
   ringX += (mouseX - 18 - ringX) * 0.12;
   ringY += (mouseY - 18 - ringY) * 0.12;
@@ -768,37 +529,24 @@ function animateRing() {
   requestAnimationFrame(animateRing);
 }
 animateRing();
+document.addEventListener('mousedown', () => { cursor.style.transform = 'scale(2.5)'; });
+document.addEventListener('mouseup', () => { cursor.style.transform = 'scale(1)'; });
 
-document.addEventListener('mousedown', () => { cursor.style.transform = 'scale(2.5)'; ring.style.transform = 'translate(0,0) scale(0.8)'; });
-document.addEventListener('mouseup', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'translate(0,0) scale(1)'; });
-
-// Hover sur éléments interactifs — agrandir cursor
-document.querySelectorAll('button, a, .card, .specialty-btn, .patient-card, .vital-card, input, select, textarea').forEach(el => {
-  el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2.2)'; cursor.style.background = 'var(--ig-pink)'; });
-  el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; cursor.style.background = 'var(--cursor-color)'; });
-});
-
-// ─── THEME TOGGLE ───
+// CORRECTION 1 : THEME TOGGLE — fond change correctement
 function toggleTheme() {
-  const body = document.body;
-  const isLight = body.classList.toggle('light-mode');
+  const isLight = document.body.classList.toggle('light-mode');
   document.getElementById('themeIcon').textContent = isLight ? '☀️' : '🌙';
   document.getElementById('themeLabel').textContent = isLight ? 'Mode nuit' : 'Mode jour';
   localStorage.setItem('medismart_theme', isLight ? 'light' : 'dark');
-  // Recréer les charts avec bonnes couleurs si on est sur la page analyses
-  if (document.getElementById('page-analyses').classList.contains('active')) {
-    updateCharts();
-  }
+  if (document.getElementById('page-analyses').classList.contains('active')) updateCharts();
 }
-
-// Restore theme
 if (localStorage.getItem('medismart_theme') === 'light') {
   document.body.classList.add('light-mode');
   document.getElementById('themeIcon').textContent = '☀️';
   document.getElementById('themeLabel').textContent = 'Mode nuit';
 }
 
-// ─── NAVIGATION ───
+// NAVIGATION
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + id)?.classList.add('active');
@@ -811,7 +559,6 @@ function showPage(id, btn) {
   if (id === 'carnet') renderCarnetPatients();
 }
 
-// ─── SPECIALTY ───
 function selectSpecialty(name, el) {
   document.querySelectorAll('.specialty-btn').forEach(b => b.classList.remove('selected'));
   if (el) el.classList.add('selected');
@@ -819,7 +566,6 @@ function selectSpecialty(name, el) {
   if (input) input.value = name;
 }
 
-// ─── TOGGLE CARNET ───
 function toggleCarnet() {
   const toggle = document.getElementById('toggle-carnet');
   const knob = document.getElementById('toggle-knob');
@@ -830,13 +576,11 @@ function toggleCarnet() {
   fields.style.display = isOn ? 'none' : 'block';
 }
 
-// ─── FORM SUBMIT ───
 function submitForm() {
   const nom = document.getElementById('nom').value;
   const maladie = document.getElementById('maladie').value;
   const symptomes = document.getElementById('symptomes').value;
   if (!nom || !maladie || !symptomes) { showNotif('⚠️ Champs manquants', 'Veuillez remplir les champs obligatoires (*)'); return; }
-
   const patient = {
     id: 'PAT-' + Date.now(), nom, maladie,
     specialite: document.getElementById('specialite').value,
@@ -859,14 +603,13 @@ function submitForm() {
     date: new Date().toLocaleDateString('fr-FR'),
     timestamp: Date.now()
   };
-
   patients.push(patient);
   localStorage.setItem('medismart_patients', JSON.stringify(patients));
   const ord = generateOrdonnance(patient);
   ordonnances.push(ord);
   localStorage.setItem('medismart_ordonnances', JSON.stringify(ordonnances));
   updateStats();
-  showNotif('✅ Patient enregistré', `${nom} — Analyse IA générée avec succès`);
+  showNotif('✅ Patient enregistré', nom + ' — Analyse IA générée avec succès');
   document.querySelectorAll('input:not([readonly]), select, textarea').forEach(el => { el.value = ''; });
   document.querySelectorAll('.specialty-btn').forEach(b => b.classList.remove('selected'));
   setTimeout(() => showPage('suivi'), 1500);
@@ -883,29 +626,18 @@ function generateOrdonnance(patient) {
 }
 
 function generateAIText(patient) {
-  return `Analyse IA — Patient ${patient.nom}, ${patient.specialite||'médecine générale'}. Gravité ${patient.gravite||'modérée'}. Symptômes : ${patient.symptomes?.slice(0,80)}... Protocole thérapeutique recommandé avec réévaluation dans 4 semaines. ${patient.fc > 100 ? '⚠️ Tachycardie détectée.' : ''} ${patient.temperature > 38 ? '⚠️ Fièvre — bilan infectieux conseillé.' : ''}`;
+  return 'Analyse IA — Patient ' + patient.nom + ', ' + (patient.specialite||'médecine générale') + '. Gravité ' + (patient.gravite||'modérée') + '. Symptômes : ' + (patient.symptomes||'').slice(0,80) + '... Protocole thérapeutique recommandé avec réévaluation dans 4 semaines.' + (patient.fc > 100 ? ' ⚠️ Tachycardie détectée.' : '') + (patient.temperature > 38 ? ' ⚠️ Fièvre — bilan infectieux conseillé.' : '');
 }
 
-// ─── PATIENTS ───
 function renderPatients(filter = '') {
   const container = document.getElementById('patients-list');
-  const filtered = patients.filter(p =>
-    p.nom.toLowerCase().includes(filter.toLowerCase()) ||
-    p.maladie.toLowerCase().includes(filter.toLowerCase()) ||
-    (p.specialite||'').toLowerCase().includes(filter.toLowerCase())
-  );
+  const filtered = patients.filter(p => p.nom.toLowerCase().includes((filter||'').toLowerCase()) || p.maladie.toLowerCase().includes((filter||'').toLowerCase()) || (p.specialite||'').toLowerCase().includes((filter||'').toLowerCase()));
   if (!filtered.length) {
-    container.innerHTML = `<div style="text-align:center;padding:3rem;color:var(--text2)"><div style="font-size:3rem;margin-bottom:1rem">📋</div><p>${filter ? 'Aucun résultat pour "'+filter+'"' : 'Aucun patient enregistré.'}</p>${!filter ? '<button class="btn btn-primary btn-vibrate" onclick="showPage(\'collecte\')" style="margin-top:1rem">+ Nouveau patient</button>' : ''}</div>`;
+    container.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--text2)"><div style="font-size:3rem;margin-bottom:1rem">📋</div><p>' + (filter ? 'Aucun résultat pour "'+filter+'"' : 'Aucun patient enregistré.') + '</p>' + (!filter ? '<button class="btn btn-primary" onclick="showPage(\'collecte\')" style="margin-top:1rem">+ Nouveau patient</button>' : '') + '</div>';
     return;
   }
-  const gravColors = { Léger:'badge-green', Modéré:'badge-yellow', Sévère:'badge-red', Critique:'badge-red' };
-  container.innerHTML = filtered.map(p => `
-    <div class="patient-card" onclick="viewPatient('${p.id}')">
-      <div class="patient-avatar">${getSpecialtyEmoji(p.specialite)}</div>
-      <div class="patient-info"><h4>${p.nom}</h4><p>🏥 ${p.specialite||'Non spécifié'} · 🦠 ${p.maladie}</p><p style="margin-top:4px">🌍 ${p.pays||'?'}, ${p.ville||'?'} · 📅 ${p.date}</p></div>
-      <div class="patient-meta"><span class="badge ${gravColors[p.gravite]||'badge-cyan'}">${p.gravite||'À évaluer'}</span><div style="font-size:0.75rem;color:var(--text2);margin-top:6px">${p.typeConsult||'Présentiel'}</div></div>
-    </div>
-  `).join('');
+  const gravColors = { 'Léger':'badge-green', 'Modéré':'badge-yellow', 'Sévère':'badge-red', 'Critique':'badge-red' };
+  container.innerHTML = filtered.map(p => '<div class="patient-card" onclick="viewPatient(\'' + p.id + '\')"><div class="patient-avatar">' + getSpecialtyEmoji(p.specialite) + '</div><div class="patient-info"><h4>' + p.nom + '</h4><p>🏥 ' + (p.specialite||'Non spécifié') + ' · 🦠 ' + p.maladie + '</p><p style="margin-top:4px">🌍 ' + (p.pays||'?') + ', ' + (p.ville||'?') + ' · 📅 ' + p.date + '</p></div><div class="patient-meta"><span class="badge ' + (gravColors[p.gravite]||'badge-cyan') + '">' + (p.gravite||'À évaluer') + '</span><div style="font-size:0.75rem;color:var(--text2);margin-top:6px">' + (p.typeConsult||'Présentiel') + '</div></div></div>').join('');
 }
 function filterPatients(val) { renderPatients(val); }
 function getSpecialtyEmoji(sp) {
@@ -917,7 +649,6 @@ function viewPatient(id) {
   if (p) showNotif('👤 ' + p.nom, p.maladie + ' · ' + p.specialite);
 }
 
-// ─── STATS ───
 function updateStats() {
   document.getElementById('stat-patients').textContent = patients.length;
   document.getElementById('stat-consultations').textContent = patients.length;
@@ -932,7 +663,6 @@ function updateStats() {
   }
 }
 
-// ─── CHARTS ───
 let charts = {};
 function updateCharts() {
   updateStats();
@@ -940,7 +670,7 @@ function updateCharts() {
   const tickColor = isLight ? '#555570' : '#8888aa';
   const gridColor = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.04)';
   const defaultData = patients.length === 0;
-  const specialiteCount = {}, paysCount = {}, graviteCount = { Léger:0, Modéré:0, Sévère:0, Critique:0 }, maladieCount = {};
+  const specialiteCount = {}, paysCount = {}, graviteCount = { 'Léger':0, 'Modéré':0, 'Sévère':0, 'Critique':0 }, maladieCount = {};
   patients.forEach(p => {
     if (p.specialite) specialiteCount[p.specialite] = (specialiteCount[p.specialite]||0)+1;
     if (p.pays) paysCount[p.pays] = (paysCount[p.pays]||0)+1;
@@ -949,20 +679,20 @@ function updateCharts() {
   });
   const spLabels = defaultData ? ['Cardiologie','Neurologie','Pneumologie','Pédiatrie','Oncologie','Autre'] : Object.keys(specialiteCount);
   const spData = defaultData ? [30,20,18,15,10,7] : Object.values(specialiteCount);
-  const pLabels = defaultData ? ['Cameroun','Sénégal','Côte d\'Ivoire','Mali','France'] : Object.keys(paysCount);
+  const pLabels = defaultData ? ['Cameroun','Sénégal',"Côte d'Ivoire",'Mali','France'] : Object.keys(paysCount);
   const pData = defaultData ? [40,25,18,12,5] : Object.values(paysCount);
   const igColors = ['#833ab4','#fd1d1d','#fcb045','#ff6b6b','#4ecdc4','#45b7d1'];
-  const bgAlpha = isLight ? 'CC' : 'FF';
+  const bgColor = isLight ? '#f4f4f8' : '#050508';
 
   if (charts.sp) charts.sp.destroy();
-  charts.sp = new Chart(document.getElementById('chart-specialites').getContext('2d'), { type:'doughnut', data:{ labels:spLabels, datasets:[{ data:spData, backgroundColor:igColors, borderColor: isLight ? '#f4f4f8' : '#050508', borderWidth:3 }] }, options:{ responsive:true, plugins:{ legend:{ labels:{ color:tickColor, font:{ family:'DM Sans' } } } } } });
+  charts.sp = new Chart(document.getElementById('chart-specialites').getContext('2d'), { type:'doughnut', data:{ labels:spLabels, datasets:[{ data:spData, backgroundColor:igColors, borderColor:bgColor, borderWidth:3 }] }, options:{ responsive:true, plugins:{ legend:{ labels:{ color:tickColor } } } } });
 
   if (charts.pays) charts.pays.destroy();
   charts.pays = new Chart(document.getElementById('chart-pays').getContext('2d'), { type:'bar', data:{ labels:pLabels, datasets:[{ data:pData, backgroundColor:igColors, borderRadius:8 }] }, options:{ responsive:true, plugins:{ legend:{ display:false } }, scales:{ x:{ ticks:{ color:tickColor }, grid:{ color:gridColor } }, y:{ ticks:{ color:tickColor }, grid:{ color:gridColor } } } } });
 
   if (charts.grav) charts.grav.destroy();
-  const gravData = defaultData ? [35,40,18,7] : [graviteCount.Léger,graviteCount.Modéré,graviteCount.Sévère,graviteCount.Critique];
-  charts.grav = new Chart(document.getElementById('chart-gravite').getContext('2d'), { type:'pie', data:{ labels:['Léger','Modéré','Sévère','Critique'], datasets:[{ data:gravData, backgroundColor:['#00e676','#ffd600','#ff9100','#ff1744'], borderColor: isLight ? '#f4f4f8' : '#050508', borderWidth:3 }] }, options:{ responsive:true, plugins:{ legend:{ labels:{ color:tickColor } } } } });
+  const gravData = defaultData ? [35,40,18,7] : [graviteCount['Léger'],graviteCount['Modéré'],graviteCount['Sévère'],graviteCount['Critique']];
+  charts.grav = new Chart(document.getElementById('chart-gravite').getContext('2d'), { type:'pie', data:{ labels:['Léger','Modéré','Sévère','Critique'], datasets:[{ data:gravData, backgroundColor:['#00e676','#ffd600','#ff9100','#ff1744'], borderColor:bgColor, borderWidth:3 }] }, options:{ responsive:true, plugins:{ legend:{ labels:{ color:tickColor } } } } });
 
   if (charts.evol) charts.evol.destroy();
   const months = ['Jan','Fév','Mar','Avr','Mai','Jun'];
@@ -971,60 +701,22 @@ function updateCharts() {
 
   const topMaladies = defaultData ? [['Hypertension',32],['Diabète type 2',28],['Paludisme',24],['Asthme',18],['Anémie',15]] : Object.entries(maladieCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
   const total = topMaladies.reduce((s,[,v])=>s+v,0)||1;
-  document.getElementById('diseases-bars').innerHTML = topMaladies.map(([name,count])=>`<div class="progress-item"><div class="progress-header"><span>${name}</span><span class="progress-val">${count} cas (${Math.round(count/total*100)}%)</span></div><div class="progress-bar"><div class="progress-fill" style="width:${Math.round(count/total*100)}%"></div></div></div>`).join('');
+  document.getElementById('diseases-bars').innerHTML = topMaladies.map(([name,count])=>'<div class="progress-item"><div class="progress-header"><span>'+name+'</span><span class="progress-val">'+count+' cas ('+Math.round(count/total*100)+'%)</span></div><div class="progress-bar"><div class="progress-fill" style="width:'+Math.round(count/total*100)+'%"></div></div></div>').join('');
 
   if (!defaultData) {
     const topSp = Object.entries(specialiteCount).sort((a,b)=>b[1]-a[1])[0];
     const topPays = Object.entries(paysCount).sort((a,b)=>b[1]-a[1])[0];
-    document.getElementById('ai-global-text').textContent = `Analyse de ${patients.length} patient(s). Spécialité dominante : ${topSp?.[0]||'N/A'} (${topSp?.[1]||0} cas). Pays le plus représenté : ${topPays?.[0]||'N/A'}. ${graviteCount.Critique>0 ? '⚠️ '+graviteCount.Critique+' cas critique(s) nécessitent une attention immédiate.' : '✅ Aucun cas critique actif.'} Recommandation : suivi intensif pour les cas sévères.`;
+    document.getElementById('ai-global-text').textContent = 'Analyse de '+patients.length+' patient(s). Spécialité dominante : '+(topSp?.[0]||'N/A')+' ('+(topSp?.[1]||0)+' cas). Pays le plus représenté : '+(topPays?.[0]||'N/A')+'. '+(graviteCount['Critique']>0 ? '⚠️ '+graviteCount['Critique']+' cas critique(s) nécessitent une attention immédiate.' : '✅ Aucun cas critique actif.')+' Recommandation : suivi intensif pour les cas sévères.';
   }
 }
 
-// ─── RENDER ORDONNANCES ───
 function renderOrdonnances() {
   const container = document.getElementById('ordonnances-list');
-  const gravColors = { Léger:'badge-green', Modéré:'badge-yellow', Sévère:'badge-red', Critique:'badge-red' };
-
   if (ordonnances.length === 0) {
-    container.innerHTML = `<div style="text-align:center;padding:3rem;color:var(--text2)">
-      <div style="font-size:3rem;margin-bottom:1rem">💊</div>
-      <p>Aucune ordonnance générée.<br>Enregistrez un patient pour générer une ordonnance automatiquement.</p>
-      <button class="btn btn-primary btn-vibrate" onclick="showPage('collecte')" style="margin-top:1rem">+ Nouvelle consultation</button>
-    </div>`;
+    container.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--text2)"><div style="font-size:3rem;margin-bottom:1rem">💊</div><p>Aucune ordonnance générée.<br>Enregistrez un patient pour générer une ordonnance.</p><button class="btn btn-primary" onclick="showPage(\'collecte\')" style="margin-top:1rem">+ Nouvelle consultation</button></div>';
     return;
   }
-
-  container.innerHTML = ordonnances.map((ord, i) => `
-    <div class="ordonnance" style="margin-bottom:1.5rem">
-      <div class="ordonnance-header">
-        <div>
-          <div class="ordonnance-title">💊 Ordonnance Médicale</div>
-          <div style="font-size:0.8rem;color:var(--text2);margin-top:4px">Ref: ${ord.id} · ${ord.date}</div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-size:0.9rem;font-weight:600">${ord.patientNom}</div>
-          <div style="font-size:0.8rem;color:var(--text2)">${ord.specialite || 'Médecine Générale'}</div>
-          <span class="badge badge-green">✓ Active</span>
-        </div>
-      </div>
-      <div class="ai-box" style="margin-bottom:1rem">
-        <div class="ai-label">🤖 Analyse IA</div>
-        <div class="ai-text">${ord.aiAnalysis}</div>
-      </div>
-      ${ord.medicaments.map((med, j) => `
-        <div class="ordonnance-item">
-          <div class="ord-num">${j+1}</div>
-          <div><div style="font-weight:600">${med}</div></div>
-        </div>
-      `).join('')}
-      <div class="divider"></div>
-      <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
-        <button class="btn btn-secondary btn-vibrate" style="font-size:0.85rem;padding:10px 18px">🖨️ Imprimer</button>
-        <button class="btn btn-secondary btn-vibrate" style="font-size:0.85rem;padding:10px 18px">📧 Email</button>
-        <button class="btn btn-primary btn-vibrate" onclick="deleteOrdonnance('${ord.id}')" style="font-size:0.85rem;padding:10px 18px;background:rgba(255,23,68,0.2);color:var(--red);border:1px solid var(--red)">🗑 Supprimer</button>
-      </div>
-    </div>
-  `).join('');
+  container.innerHTML = ordonnances.map(ord => '<div class="ordonnance" style="margin-bottom:1.5rem"><div class="ordonnance-header"><div><div class="ordonnance-title">💊 Ordonnance Médicale</div><div style="font-size:0.8rem;color:var(--text2);margin-top:4px">Ref: '+ord.id+' · '+ord.date+'</div></div><div style="text-align:right"><div style="font-size:0.9rem;font-weight:600">'+ord.patientNom+'</div><div style="font-size:0.8rem;color:var(--text2)">'+(ord.specialite||'Médecine Générale')+'</div><span class="badge badge-green">✓ Active</span></div></div><div class="ai-box" style="margin-bottom:1rem"><div class="ai-label">🤖 Analyse IA</div><div class="ai-text">'+ord.aiAnalysis+'</div></div>'+ord.medicaments.map((med,j)=>'<div class="ordonnance-item"><div class="ord-num">'+(j+1)+'</div><div><div style="font-weight:600">'+med+'</div></div></div>').join('')+'<div class="divider"></div><div style="display:flex;gap:0.75rem;flex-wrap:wrap"><button class="btn btn-secondary" style="font-size:0.85rem;padding:10px 18px">🖨️ Imprimer</button><button class="btn btn-secondary" style="font-size:0.85rem;padding:10px 18px">📧 Email</button><button class="btn btn-secondary" onclick="deleteOrdonnance(\''+ord.id+'\')" style="font-size:0.85rem;padding:10px 18px;color:var(--red);border-color:rgba(255,23,68,0.3)">🗑 Supprimer</button></div></div>').join('');
 }
 
 function deleteOrdonnance(id) {
@@ -1034,90 +726,24 @@ function deleteOrdonnance(id) {
   showNotif('🗑 Supprimé', 'Ordonnance supprimée avec succès');
 }
 
-// ─── RENDER CARNET PATIENTS LIST ───
 function renderCarnetPatients() {
   const container = document.getElementById('carnet-patients-list');
   if (!container) return;
-
   if (patients.length === 0) {
-    container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--text2)">
-      <div style="font-size:2.5rem;margin-bottom:0.75rem">📂</div>
-      <p>Aucun patient enregistré dans la base de données.</p>
-      <button class="btn btn-primary btn-vibrate" onclick="showPage('collecte')" style="margin-top:1rem">+ Enregistrer un patient</button>
-    </div>`;
+    container.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text2)"><div style="font-size:2.5rem;margin-bottom:0.75rem">📂</div><p>Aucun patient enregistré.</p><button class="btn btn-primary" onclick="showPage(\'collecte\')" style="margin-top:1rem">+ Enregistrer un patient</button></div>';
     return;
   }
-
-  const gravColors = { Léger:'badge-green', Modéré:'badge-yellow', Sévère:'badge-red', Critique:'badge-red' };
-
+  const gravColors = { 'Léger':'badge-green', 'Modéré':'badge-yellow', 'Sévère':'badge-red', 'Critique':'badge-red' };
   container.innerHTML = patients.map(p => {
     const age = p.dob ? Math.floor((Date.now() - new Date(p.dob)) / 31557600000) : '?';
     const imc = (p.poids && p.taille) ? (p.poids / ((p.taille/100)**2)).toFixed(1) : null;
     const ord = ordonnances.find(o => o.patientId === p.id);
-    return `
-      <div class="ig-border" style="margin-bottom:1.25rem">
-        <div class="ig-border-inner">
-          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap">
-            <div style="width:52px;height:52px;border-radius:14px;background:var(--ig-grad);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">${getSpecialtyEmoji(p.specialite)}</div>
-            <div style="flex:1">
-              <div style="font-family:Syne,sans-serif;font-size:1.1rem;font-weight:700">${p.nom}</div>
-              <div style="font-size:0.82rem;color:var(--text2);margin-top:2px">ID : <span style="color:var(--ig-orange);font-weight:600">${p.id}</span> · ${p.date}</div>
-            </div>
-            <span class="badge ${gravColors[p.gravite]||'badge-cyan'}">${p.gravite||'À évaluer'}</span>
-          </div>
-
-          <div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1rem">
-            ${p.sexe ? `<span class="tag">👤 ${p.sexe}</span>` : ''}
-            ${age !== '?' ? `<span class="tag">🎂 ${age} ans</span>` : ''}
-            ${p.groupeSanguin ? `<span class="tag">🩸 ${p.groupeSanguin}</span>` : ''}
-            ${p.pays ? `<span class="tag">🌍 ${p.pays}${p.ville ? ', '+p.ville : ''}</span>` : ''}
-            ${p.specialite ? `<span class="tag">🏥 ${p.specialite}</span>` : ''}
-            ${p.typeConsult ? `<span class="tag">📋 ${p.typeConsult}</span>` : ''}
-          </div>
-
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:0.75rem;margin-bottom:1rem">
-            ${p.temperature ? `<div class="vital-card" style="padding:0.75rem"><div class="vital-val text-grad" style="font-size:1.1rem">${p.temperature}°C</div><div class="vital-lbl">🌡 Température</div></div>` : ''}
-            ${p.fc ? `<div class="vital-card" style="padding:0.75rem"><div class="vital-val text-grad" style="font-size:1.1rem">${p.fc} bpm</div><div class="vital-lbl">💓 Fréquence cardiaque</div></div>` : ''}
-            ${p.spo2 ? `<div class="vital-card" style="padding:0.75rem"><div class="vital-val text-grad" style="font-size:1.1rem">${p.spo2}%</div><div class="vital-lbl">🫁 SpO2</div></div>` : ''}
-            ${p.pression ? `<div class="vital-card" style="padding:0.75rem"><div class="vital-val text-grad" style="font-size:1.1rem">${p.pression}</div><div class="vital-lbl">🩺 Tension</div></div>` : ''}
-            ${imc ? `<div class="vital-card" style="padding:0.75rem"><div class="vital-val text-grad" style="font-size:1.1rem">${imc}</div><div class="vital-lbl">⚖️ IMC</div></div>` : ''}
-          </div>
-
-          <div class="timeline" style="margin-bottom:1rem">
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-card">
-                <div class="timeline-date">${p.date} — ${p.typeConsult||'Consultation'}</div>
-                <div class="timeline-title">🦠 ${p.maladie}</div>
-                <div class="timeline-body">${p.symptomes?.slice(0,120)}${p.symptomes?.length > 120 ? '...' : ''}</div>
-                ${p.antecedents ? `<div class="timeline-body" style="margin-top:4px">📋 Antécédents : ${p.antecedents.slice(0,80)}</div>` : ''}
-              </div>
-            </div>
-            ${ord ? `
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-card">
-                <div class="timeline-date">Ordonnance — ${ord.id}</div>
-                <div class="timeline-title">💊 Traitement prescrit</div>
-                <div class="timeline-body">${ord.medicaments.join(' · ')}</div>
-              </div>
-            </div>` : ''}
-          </div>
-
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
-            <button class="btn btn-secondary btn-vibrate" onclick="openPatientDossier('${p.id}')" style="font-size:0.82rem;padding:8px 14px">📂 Ouvrir dossier</button>
-            <button class="btn btn-secondary btn-vibrate" onclick="deletePatient('${p.id}')" style="font-size:0.82rem;padding:8px 14px;color:var(--red);border-color:rgba(255,23,68,0.3)">🗑 Supprimer</button>
-          </div>
-        </div>
-      </div>
-    `;
+    return '<div class="ig-border" style="margin-bottom:1.25rem"><div class="ig-border-inner"><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap"><div style="width:52px;height:52px;border-radius:14px;background:var(--ig-grad);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">'+getSpecialtyEmoji(p.specialite)+'</div><div style="flex:1"><div style="font-family:Syne,sans-serif;font-size:1.1rem;font-weight:700">'+p.nom+'</div><div style="font-size:0.82rem;color:var(--text2);margin-top:2px">ID : <span style="color:var(--ig-orange);font-weight:600">'+p.id+'</span> · '+p.date+'</div></div><span class="badge '+(gravColors[p.gravite]||'badge-cyan')+'">'+(p.gravite||'À évaluer')+'</span></div><div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1rem">'+(p.sexe?'<span class="tag">👤 '+p.sexe+'</span>':'')+(age!=='?'?'<span class="tag">🎂 '+age+' ans</span>':'')+(p.pays?'<span class="tag">🌍 '+p.pays+(p.ville?', '+p.ville:'')+'</span>':'')+(p.specialite?'<span class="tag">🏥 '+p.specialite+'</span>':'')+(p.typeConsult?'<span class="tag">📋 '+p.typeConsult+'</span>':'')+'</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:0.75rem;margin-bottom:1rem">'+(p.temperature?'<div class="vital-card" style="padding:0.75rem"><div class="vital-val text-grad" style="font-size:1.1rem">'+p.temperature+'°C</div><div class="vital-lbl">🌡 Température</div></div>':'')+(p.fc?'<div class="vital-card" style="padding:0.75rem"><div class="vital-val text-grad" style="font-size:1.1rem">'+p.fc+' bpm</div><div class="vital-lbl">💓 FC</div></div>':'')+(p.spo2?'<div class="vital-card" style="padding:0.75rem"><div class="vital-val text-grad" style="font-size:1.1rem">'+p.spo2+'%</div><div class="vital-lbl">🫁 SpO2</div></div>':'')+(p.pression?'<div class="vital-card" style="padding:0.75rem"><div class="vital-val text-grad" style="font-size:1.1rem">'+p.pression+'</div><div class="vital-lbl">🩺 Tension</div></div>':'')+(imc?'<div class="vital-card" style="padding:0.75rem"><div class="vital-val text-grad" style="font-size:1.1rem">'+imc+'</div><div class="vital-lbl">⚖️ IMC</div></div>':'')+'</div><div class="timeline" style="margin-bottom:1rem"><div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card"><div class="timeline-date">'+p.date+' — '+(p.typeConsult||'Consultation')+'</div><div class="timeline-title">🦠 '+p.maladie+'</div><div class="timeline-body">'+(p.symptomes||'').slice(0,120)+((p.symptomes||'').length>120?'...':'')+'</div>'+(p.antecedents?'<div class="timeline-body" style="margin-top:4px">📋 Antécédents : '+p.antecedents.slice(0,80)+'</div>':'')+'</div></div>'+(ord?'<div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card"><div class="timeline-date">Ordonnance — '+ord.id+'</div><div class="timeline-title">💊 Traitement prescrit</div><div class="timeline-body">'+ord.medicaments.join(' · ')+'</div></div></div>':'')+'</div><div style="display:flex;gap:0.5rem;flex-wrap:wrap"><button class="btn btn-secondary" onclick="openPatientDossier(\''+p.id+'\')" style="font-size:0.82rem;padding:8px 14px">📂 Ouvrir dossier</button><button class="btn btn-secondary" onclick="deletePatient(\''+p.id+'\')" style="font-size:0.82rem;padding:8px 14px;color:var(--red);border-color:rgba(255,23,68,0.3)">🗑 Supprimer</button></div></div></div>';
   }).join('');
 }
 
 function openPatientDossier(id) {
-  const p = patients.find(x => x.id === id);
-  if (!p) return;
-  document.getElementById('login-id').value = p.id;
+  document.getElementById('login-id').value = id;
   loginCarnet();
   window.scrollTo(0, 0);
 }
@@ -1133,21 +759,19 @@ function deletePatient(id) {
   showNotif('🗑 Supprimé', 'Patient supprimé de la base de données');
 }
 
-// ─── CARNET LOGIN ───
 function loginCarnet() {
   const id = document.getElementById('login-id').value;
   if (!id) { showNotif('⚠️','Identifiant requis'); return; }
   const patient = patients.find(p => p.id === id);
   if (patient) {
     document.getElementById('carnet-content').style.display = 'block';
-    document.getElementById('carnet-patient-info').innerHTML = `<div class="ig-border" style="margin-bottom:1.5rem"><div class="ig-border-inner"><h3 style="font-family:Syne,sans-serif;margin-bottom:1rem">👤 ${patient.nom}</h3><div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem"><span class="tag">🌍 ${patient.pays}</span><span class="tag">🏥 ${patient.specialite}</span><span class="tag">🦠 ${patient.maladie}</span><span class="tag">📅 ${patient.date}</span></div><div class="ai-box"><div class="ai-label">🤖 Analyse IA Personnalisée</div><div class="ai-text">${generateAIText(patient)}</div></div></div></div>`;
+    document.getElementById('carnet-patient-info').innerHTML = '<div class="ig-border" style="margin-bottom:1.5rem"><div class="ig-border-inner"><h3 style="font-family:Syne,sans-serif;margin-bottom:1rem">👤 '+patient.nom+'</h3><div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem"><span class="tag">🌍 '+patient.pays+'</span><span class="tag">🏥 '+patient.specialite+'</span><span class="tag">🦠 '+patient.maladie+'</span><span class="tag">📅 '+patient.date+'</span></div><div class="ai-box"><div class="ai-label">🤖 Analyse IA Personnalisée</div><div class="ai-text">'+generateAIText(patient)+'</div></div></div></div>';
     showNotif('✅ Accès autorisé','Bienvenue '+patient.nom);
   } else {
     showNotif('❌ Accès refusé','Patient non trouvé. Vérifiez votre ID.');
   }
 }
 
-// ─── NOTIFICATION ───
 function showNotif(title, body) {
   const notif = document.getElementById('notif');
   document.getElementById('notif-title').textContent = title;
@@ -1156,7 +780,6 @@ function showNotif(title, body) {
   setTimeout(() => { notif.style.display = 'none'; }, 4000);
 }
 
-// ─── INIT ───
 document.addEventListener('DOMContentLoaded', () => {
   updateStats();
   renderOrdonnances();
@@ -1164,7 +787,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (patients.length === 0) {
     let count = 0;
     const el = document.getElementById('stat-specialites');
-    const timer = setInterval(() => { count += 1; el.textContent = count; if (count >= 12) clearInterval(timer); }, 80);
+    const timer = setInterval(() => { count++; el.textContent = count; if (count >= 12) clearInterval(timer); }, 80);
   }
 });
 </script>
